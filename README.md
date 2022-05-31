@@ -6,7 +6,7 @@
 Pierwsza część projektu zawiera edytor tekstowy obsługujący:
 - formatowanie w stylu MarkDown'a, m.in: \*pogrubienie\*, \/kursywa/\, \`kod\`, \$indeks dolny\$, \^indeks górny\^, \~przekreślenie\~, \_podkreślenie\_, \<url\>
 - wyświetlanie sformatowanego tekstu na bieżąco w równoległym oknie (podgląd można wyłączyć)
-- skróty klawiszowe: "ctrl + B: *strong*  ctrl + D: `code`  ctrl + I: /italics/  ctrl + L: $lowered$  ctrl + R: ^raised^  ctrl + S: ~strikethrough~  ctrl + U: _underline_  ctrl + Q: quit
+- skróty klawiszowe: ctrl + B: *strong*  ctrl + D: `code`  ctrl + I: /italics/  ctrl + L: $lowered$  ctrl + R: ^raised^  ctrl + S: ~strikethrough~  ctrl + U: _underline_  ctrl + Q: quit
 - obsługę plików: otwieranie pliku, zapis pliku, zapis pliku pod nową nazwą, zapis pliku przy wychodzeniu z edytora
 
 ## uruchamianie
