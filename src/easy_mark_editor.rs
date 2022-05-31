@@ -15,8 +15,7 @@ pub struct TextEditor {
 
 impl PartialEq for TextEditor {
     fn eq(&self, other: &Self) -> bool {
-        (&self.code, self.show_rendered)
-            == (&other.code, other.show_rendered)
+        (&self.code, self.show_rendered) == (&other.code, other.show_rendered)
     }
 }
 
@@ -39,38 +38,42 @@ impl epi::App for TextEditor {
     }
 
     fn name(&self) -> &str {
-        "this is a text editor"
+        "Rust text editor"
     }
 
     fn update(&mut self, ctx: &eframe::egui::Context, frame: &epi::Frame) {
         ctx.set_visuals(egui::Visuals::dark());
         egui::SidePanel::right("side_panel").show(ctx, |ui| {
-
             if ui.button(format!("{:^17}", "Quit")).clicked() {
                 eprintln!("Quitting via the 'Quit' button");
                 frame.quit();
             }
 
-            if ui.button(format!("{:^13}", "Open file")).clicked() && matches!(self.open(), Err(_)) {
+            if ui.button(format!("{:^13}", "Open file")).clicked() && matches!(self.open(), Err(_))
+            {
                 MessageDialog::new()
-                    .set_title("opening")
-                    .set_description("faled to open the file")
+                    .set_title("File is opening")
+                    .set_description("Failed to open the file")
                     .set_buttons(rfd::MessageButtons::Ok)
                     .show();
             }
 
-            if ui.button(format!("{:^15}", "Save file")).clicked() && matches!(self.save(false), Err(_)) {
+            if ui.button(format!("{:^15}", "Save file")).clicked()
+                && matches!(self.save(false), Err(_))
+            {
                 MessageDialog::new()
-                    .set_title("saving")
-                    .set_description("failed to save the file")
+                    .set_title("File is saving")
+                    .set_description("Failed to save the file")
                     .set_buttons(rfd::MessageButtons::Ok)
                     .show();
             }
 
-            if ui.button(format!("{:^13}", "Save file as")).clicked() && matches!(self.save(true), Err(_)) {
+            if ui.button(format!("{:^13}", "Save file as")).clicked()
+                && matches!(self.save(true), Err(_))
+            {
                 MessageDialog::new()
-                    .set_title("saving as")
-                    .set_description("failed to save the file")
+                    .set_title("Saving file as")
+                    .set_description("Failed to save the file")
                     .set_buttons(rfd::MessageButtons::Ok)
                     .show();
             }
@@ -84,8 +87,7 @@ impl epi::App for TextEditor {
                 self.should_exit = self.quit();
                 if self.should_exit {
                     frame.quit();
-                }
-                else {
+                } else {
                     self.is_exiting = false;
                 }
             }
@@ -100,7 +102,7 @@ impl epi::App for TextEditor {
 impl TextEditor {
     fn open(&mut self) -> Result<(), std::io::Error> {
         let path = FileDialog::new()
-            .set_directory("~/") 
+            .set_directory("~/")
             .pick_file()
             .unwrap_or_default();
 
@@ -119,12 +121,12 @@ impl TextEditor {
         Ok(())
     }
 
-    fn save(&mut self, save_as : bool) -> Result<(), std::io::Error> {
+    fn save(&mut self, save_as: bool) -> Result<(), std::io::Error> {
         let path = match (&self.file_path, save_as) {
             (Some(p), false) => p.clone(),
             _ => FileDialog::new()
-                .set_title("save file")
-                .set_directory("~/") 
+                .set_title("Save file")
+                .set_directory("~/")
                 .save_file()
                 .unwrap_or_default(),
         };
@@ -147,26 +149,26 @@ impl TextEditor {
     // true if editor can exit (save not requested or succeed)
     fn quit(&mut self) -> bool {
         let mess = MessageDialog::new()
-        .set_title("quit")
-        .set_description("do you want to save before quitting?")
-        .set_buttons(rfd::MessageButtons::YesNo)
-        .show();
+            .set_title("Quit")
+            .set_description("Do you want to save before quitting?")
+            .set_buttons(rfd::MessageButtons::YesNo)
+            .show();
 
-    if mess { 
-        match self.save(false) {
-            Ok(()) => true,
-            Err(_) => {
-                MessageDialog::new()
-                    .set_title("quitting")
-                    .set_description("faled to save the file")
-                    .set_buttons(rfd::MessageButtons::Ok)
-                    .show();
-                false
+        if mess {
+            match self.save(false) {
+                Ok(()) => true,
+                Err(_) => {
+                    MessageDialog::new()
+                        .set_title("Quitting")
+                        .set_description("Failed to save the file")
+                        .set_buttons(rfd::MessageButtons::Ok)
+                        .show();
+                    false
+                }
             }
+        } else {
+            true
         }
-    } else {
-        true
-     }
     }
 
     fn ui(&mut self, ui: &mut egui::Ui) {
@@ -175,7 +177,6 @@ impl TextEditor {
             ui.end_row();
             egui::reset_button(ui, self);
             ui.end_row();
-
         });
 
         ui.separator();
@@ -199,9 +200,7 @@ impl TextEditor {
     }
 
     fn editor_ui(&mut self, ui: &mut egui::Ui) {
-        let Self {
-            code, ..
-        } = self;
+        let Self { code, .. } = self;
 
         let response = {
             ui.add(
